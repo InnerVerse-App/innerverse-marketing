@@ -1,0 +1,437 @@
+---
+import "../styles/global.css";
+import { APP_URL } from "../lib/brand";
+
+const year = new Date().getFullYear();
+
+// Source of truth for these quotes:
+// C:\Users\steve\Desktop\innerverse-web-app\reference\testimonials.md
+const testimonials = [
+  {
+    quote:
+      "At first it was annoying because my nervous system is wired for action, movement and immediate gratification. The more I worked it through, the more I got the fruits of the interaction. It's true to its name. It's forcing you to turn inward. It forces the slowdown and reflection and intentionally gets you uncomfortable — but not unseen. This is where many coaches and therapists get it wrong. The tough love approach that doesn't actually meet you where you are. This one says, 'I see you exactly for who you are. Here's why you think it. Here's why it's holding you back.' Then gives you the space to dig yourself out.",
+    name: "Geoff",
+    context: "Founder, Perfectia Productions",
+  },
+  {
+    quote:
+      "It's slower at times than Claude, ChatGPT, or Grok: but hands down superior at coaching. More intimate, gentle, and kind. And it doesn't give you the 'call someone who cares' prompt, which makes me feel like even AI thinks I'm doomed. It meets me where I am with the exact problems I bring, and helps me see them more like opportunities where I can expand myself, without saying that. I've done 30 years of therapy and I know what kind of help is helpful. This one is. It showed me something I hadn't seen in my own behavior yet.",
+    name: "Amber Stubbs, PhD",
+    context: "Beta tester",
+  },
+  {
+    quote:
+      "I've been married for over 15 years and I've made peace with the fact that my husband can be mean at times. I'm not leaving and I'm not trying to fix him. What I'm trying to do is stay clear about what's mine and what's his: which with my trauma history is harder than it sounds. Most coaching either pushed me toward a decision (leave) or flooded me with reframes that don't actually meet what I'm working on. InnerVerse does something different. It meets me where I actually am. When the system says something like 'your line is contact where there is respect, and space where there is not,' that's not a platitude: that's exactly the work.\n\nIt supports the work I'm actually doing instead of trying to redirect me to the work it thinks I should be doing.",
+    name: "Anonymous beta tester",
+    context: "",
+  },
+];
+
+const features = [
+  {
+    title: "Built for coaching, not chat",
+    body: "Steered to listen, reflect, and challenge — not to please. Different by design from a general-purpose chatbot.",
+    iconPath: "M12 3a4 4 0 0 0-4 4v3a4 4 0 0 0 8 0V7a4 4 0 0 0-4-4Zm-7 8a7 7 0 0 0 14 0M12 18v3M9 21h6",
+  },
+  {
+    title: "A coach in your pocket",
+    body: "Available the moment you need to think out loud — at 6am, on the train, between meetings.",
+    iconPath: "M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z",
+  },
+  {
+    title: "Watches your growth over time",
+    body: "Sessions become chapters. Breakthroughs become stars. Your inner world, mapped as a constellation that grows with you.",
+    iconPath: "M12 2 14.39 8.79 21.5 9.27 16 13.97 17.91 21 12 17.27 6.09 21 8 13.97 2.5 9.27 9.61 8.79z",
+  },
+  {
+    title: "Private by default",
+    body: "Your sessions are yours. No selling, no surveillance, no training the next big model on what you wrote at 2am.",
+    iconPath: "M12 2 4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4Z M9 12l2 2 4-4",
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>InnerVerse — Your personal Life Coach, always within reach</title>
+    <meta
+      name="description"
+      content="InnerVerse is your personal AI life coach. Reflect, grow, and remember what matters — always within reach."
+    />
+    <meta property="og:title" content="InnerVerse" />
+    <meta property="og:description" content="Your personal Life Coach, always within reach." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://innerverseapp.com" />
+    <meta property="og:image" content="https://innerverseapp.com/innerverse-logo-galaxy.png" />
+  </head>
+
+  <body class="relative text-white antialiased">
+    <!-- Page-wide galaxy background. Fixed layer behind everything so the
+         nebula stays consistent as the user scrolls; mobile-safe (we don't
+         use bg-fixed because iOS Safari mishandles it). -->
+    <div
+      class="pointer-events-none fixed inset-0 -z-10 bg-brand-dark bg-cover bg-center"
+      style="background-image: url('/galaxy-bg.png');"
+      aria-hidden="true"
+    ></div>
+    <!-- Subtle global darkening so content stays readable everywhere. -->
+    <div
+      class="pointer-events-none fixed inset-0 -z-10"
+      style="background: linear-gradient(180deg, rgba(0,5,10,0.10) 0%, rgba(0,5,10,0.30) 100%);"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-40 border-b border-white/5 bg-brand-dark/70 backdrop-blur-md">
+      <div class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-6 py-4">
+        <span
+          class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium text-white/85 sm:text-sm"
+        >
+          <span class="relative flex h-2 w-2" aria-hidden="true">
+            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/70"></span>
+            <span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span>
+          </span>
+          Available now
+        </span>
+        <a
+          href="#install"
+          class="rounded-full bg-brand-primary px-6 py-2.5 text-sm font-semibold text-brand-primary-contrast shadow-lg shadow-brand-primary/20 transition hover:opacity-90 sm:px-7 sm:py-3 sm:text-base"
+        >
+          Download the app
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section class="relative">
+        <!-- Hero gets a stronger radial vignette to make the logo pop. -->
+        <div
+          class="pointer-events-none absolute inset-0"
+          style="background: radial-gradient(ellipse at center, rgba(0,5,10,0) 0%, rgba(0,5,10,0.10) 70%, rgba(0,5,10,0.40) 100%);"
+          aria-hidden="true"
+        ></div>
+        <div class="relative mx-auto max-w-6xl px-6 pt-0 pb-24 text-center sm:pb-32">
+          <!-- Logo image already includes the tagline "Your personal Life Coach,
+               always within reach." in artwork, so we don't repeat it as an H1.
+               The sr-only H1 below preserves the page heading for SEO + screen readers. -->
+          <h1 class="sr-only">InnerVerse — Your personal Life Coach, always within reach.</h1>
+          <img
+            src="/innerverse-logo.png"
+            alt="InnerVerse — Your personal Life Coach, always within reach."
+            width="900"
+            height="900"
+            class="mx-auto -mt-6 h-auto w-80 drop-shadow-[0_0_70px_rgba(89,164,192,0.4)] sm:-mt-12 sm:w-[30rem] md:-mt-16 md:w-[36rem]"
+          />
+          <p class="mx-auto -mt-8 max-w-xl text-pretty text-lg text-white/80 sm:-mt-12 sm:text-xl">
+            InnerVerse is a private AI coach that helps you reflect, grow,
+            and remember what matters — every day.
+          </p>
+          <div class="mt-10 flex items-center justify-center">
+            <a
+              href="#install"
+              class="rounded-full bg-brand-primary px-8 py-3.5 text-base font-semibold text-brand-primary-contrast shadow-lg shadow-brand-primary/30 transition hover:opacity-90"
+            >
+              Download the app
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Feature grid -->
+      <section class="relative border-t border-white/5">
+        <div class="pointer-events-none absolute inset-0 bg-brand-dark/15" aria-hidden="true"></div>
+        <div class="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
+          <div class="mb-14 text-center">
+            <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+              Why InnerVerse is different
+            </h2>
+            <p class="mx-auto mt-3 max-w-2xl text-white/65">
+              A coaching app, not a chatbot pretending to be one.
+            </p>
+          </div>
+          <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {features.map((f) => (
+              <article class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-6 transition hover:border-brand-primary/40 hover:bg-white/[0.06]">
+                <span
+                  class="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-brand-primary/15 text-brand-primary ring-1 ring-brand-primary/20"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="h-6 w-6">
+                    <path d={f.iconPath} />
+                  </svg>
+                </span>
+                <h3 class="text-lg font-semibold tracking-tight text-white">{f.title}</h3>
+                <p class="mt-2 text-sm text-white/70 leading-relaxed">{f.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- Screenshots -->
+      <section class="relative border-t border-white/5">
+        <div class="pointer-events-none absolute inset-0 bg-brand-dark/25" aria-hidden="true"></div>
+        <div class="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
+          <div class="mb-14 text-center">
+            <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+              See it in action
+            </h2>
+            <p class="mx-auto mt-3 max-w-xl text-white/65">
+              A private space to think out loud, with a coach that remembers
+              what matters and reflects your growth back to you.
+            </p>
+          </div>
+          <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <figure class="flex flex-col items-center">
+              <div class="overflow-hidden rounded-3xl border border-white/10 bg-black/40 shadow-2xl shadow-black/50">
+                <img
+                  src="/screenshots/home.jpeg"
+                  alt="InnerVerse home screen — last coaching session summary, metrics, and your top goal."
+                  width="708"
+                  height="1534"
+                  loading="lazy"
+                  class="block h-auto w-full"
+                />
+              </div>
+              <figcaption class="mt-4 text-center text-sm text-white/65">
+                A home that knows where you've been.
+              </figcaption>
+            </figure>
+            <figure class="flex flex-col items-center">
+              <div class="overflow-hidden rounded-3xl border border-white/10 bg-black/40 shadow-2xl shadow-black/50">
+                <img
+                  src="/screenshots/sessions.jpeg"
+                  alt="InnerVerse sessions list — past coaching sessions titled with what you discovered in each."
+                  width="708"
+                  height="1534"
+                  loading="lazy"
+                  class="block h-auto w-full"
+                />
+              </div>
+              <figcaption class="mt-4 text-center text-sm text-white/65">
+                Sessions that turn into chapters.
+              </figcaption>
+            </figure>
+            <figure class="flex flex-col items-center">
+              <div class="overflow-hidden rounded-3xl border border-white/10 bg-black/40 shadow-2xl shadow-black/50">
+                <img
+                  src="/screenshots/innerverse-constellation.jpeg"
+                  alt="Your InnerVerse — a personal star map of one constellation called 'The First Honest No,' showing connected sessions, mindset shifts, and a breakthrough sun."
+                  width="708"
+                  height="1534"
+                  loading="lazy"
+                  class="block h-auto w-full"
+                />
+              </div>
+              <figcaption class="mt-4 text-center text-sm text-white/65">
+                Your growth, mapped as a constellation.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- Video walkthrough -->
+      <section class="relative border-t border-white/5">
+        <div class="pointer-events-none absolute inset-0 bg-brand-dark/15" aria-hidden="true"></div>
+        <div class="relative mx-auto max-w-3xl px-6 py-20 sm:py-24">
+          <div class="mb-10 text-center">
+            <p class="mb-3 text-sm font-medium uppercase tracking-[0.18em] text-brand-primary/85">
+              Quick walkthrough
+            </p>
+            <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+              See InnerVerse in motion
+            </h2>
+            <p class="mx-auto mt-3 max-w-xl text-white/65">
+              The InnerVerse difference; not a chat bot, and not general AI,
+              just real coaching.
+            </p>
+          </div>
+          <!-- Video is portrait (886x1920, ~9:19.5) — a phone-screen recording.
+               Constrain by HEIGHT (75vh, capped at 750px for very tall windows)
+               with aspect-ratio deriving the width. This locks the box size
+               regardless of the poster image's aspect ratio, so the frame
+               doesn't grow when the video starts playing. -->
+          <div class="mx-auto h-[75vh] max-h-[750px] overflow-hidden rounded-3xl border border-white/10 bg-black/60 shadow-2xl shadow-black/60" style="aspect-ratio: 886 / 1920;">
+            <video
+              src="/video/walkthrough.mp4"
+              controls
+              preload="metadata"
+              poster="/innerverse-logo-galaxy.png"
+              playsinline
+              class="block h-full w-full object-contain"
+            >
+              Your browser doesn't support HTML5 video. <a class="text-brand-primary underline" href="/video/walkthrough.mp4">Download the walkthrough</a>.
+            </video>
+          </div>
+        </div>
+      </section>
+
+      <!-- Testimonials -->
+      <section class="relative border-t border-white/5">
+        <div class="pointer-events-none absolute inset-0 bg-brand-dark/30" aria-hidden="true"></div>
+        <div class="relative mx-auto max-w-7xl px-6 py-20 sm:py-24">
+          <div class="mb-14 text-center">
+            <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+              Testimonials
+            </h2>
+            <p class="mx-auto mt-3 max-w-xl text-white/65">
+              Real notes from beta testers in their own words.
+            </p>
+          </div>
+          <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+            {testimonials.map((t) => (
+              <figure class="flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm sm:p-7">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  class="mb-4 h-7 w-7 text-brand-primary/80"
+                >
+                  <path d="M9.6 6.4C7 7.4 5 9.9 5 12.7c0 .3 0 .6.1.9.5-.5 1.3-.8 2.1-.8 1.6 0 2.9 1.3 2.9 3 0 1.7-1.4 3-3.1 3-2.3 0-4-1.9-4-4.6 0-3.7 2.4-7 5.7-8.5l.9 1.1zm9 0c-2.6 1-4.6 3.5-4.6 6.3 0 .3 0 .6.1.9.5-.5 1.3-.8 2.1-.8 1.6 0 2.9 1.3 2.9 3 0 1.7-1.4 3-3.1 3-2.3 0-4-1.9-4-4.6 0-3.7 2.4-7 5.7-8.5l.9 1.1z" />
+                </svg>
+                <blockquote class="flex-1 space-y-3 text-pretty text-white/85 leading-relaxed">
+                  {t.quote.split("\n\n").map((para) => (
+                    <p>{para}</p>
+                  ))}
+                </blockquote>
+                <figcaption class="mt-6 border-t border-white/10 pt-4">
+                  <div class="font-semibold text-white">{t.name}</div>
+                  {t.context && <div class="text-sm text-white/55">{t.context}</div>}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- Install instructions -->
+      <section id="install" class="relative border-t border-white/5">
+        <div class="pointer-events-none absolute inset-0 bg-brand-dark/30" aria-hidden="true"></div>
+        <div class="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
+          <div class="mb-12 text-center">
+            <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+              Install InnerVerse
+            </h2>
+            <p class="mx-auto mt-3 max-w-xl text-white/65">
+              InnerVerse installs as a Progressive Web App — straight from your
+              browser to your home screen. No app store required.
+            </p>
+          </div>
+
+          <p class="mb-8 text-center text-sm text-white/50">
+            App URL: <a class="text-brand-primary hover:underline" href={APP_URL}>app.innerverseapp.com</a>
+          </p>
+          <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <!-- iPhone (Safari) -->
+            <article class="rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm">
+              <div class="mb-4 flex items-center gap-3">
+                <span class="flex h-9 w-9 items-center justify-center rounded-full bg-brand-primary/15 text-brand-primary ring-1 ring-brand-primary/20">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="h-5 w-5">
+                    <path d="M16.365 1.43c0 1.14-.43 2.23-1.13 3.04-.74.85-1.95 1.52-3.13 1.43-.14-1.12.43-2.27 1.1-3.02.76-.86 2.04-1.49 3.16-1.45ZM20.5 17.31c-.55 1.27-.81 1.83-1.51 2.95-.98 1.55-2.36 3.49-4.07 3.5-1.52.02-1.91-.99-3.97-.98-2.05.01-2.49 1-4.01.98-1.71-.02-3.02-1.77-4-3.32C.43 16.59-.05 11.05 2.85 8.18c1-1 2.32-1.6 3.71-1.62 1.6-.03 3.1.84 3.97.84.86 0 2.71-1.04 4.57-.89.78.03 2.97.31 4.38 2.36-3.85 2.11-3.22 7.64.99 8.45Z" />
+                  </svg>
+                </span>
+                <h3 class="text-lg font-semibold">iPhone (Safari)</h3>
+              </div>
+              <p class="text-sm leading-relaxed text-white/75">
+                Open the app URL → tap the <strong>Share</strong> icon → <strong>Add to Home Screen</strong> → confirm. Launches as a chromeless standalone app from your home screen.
+              </p>
+            </article>
+
+            <!-- Android (Chrome) -->
+            <article class="rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm">
+              <div class="mb-4 flex items-center gap-3">
+                <span class="flex h-9 w-9 items-center justify-center rounded-full bg-brand-primary/15 text-brand-primary ring-1 ring-brand-primary/20">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="h-5 w-5">
+                    <path d="M17.6 9.48l1.84-3.18a.4.4 0 0 0-.69-.4L16.9 9.1a11.5 11.5 0 0 0-9.8 0L5.25 5.9a.4.4 0 1 0-.69.4L6.4 9.48A10.8 10.8 0 0 0 1 18h22a10.8 10.8 0 0 0-5.4-8.52ZM7 15.25a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm10 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z" />
+                  </svg>
+                </span>
+                <h3 class="text-lg font-semibold">Android (Chrome)</h3>
+              </div>
+              <p class="text-sm leading-relaxed text-white/75">
+                Open the app URL → Chrome shows an <strong>Install app</strong> prompt or chip. If it doesn't, tap the <strong>⋮</strong> menu → <strong>Install app</strong>.
+              </p>
+            </article>
+
+            <!-- Mac (Safari) -->
+            <article class="rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm">
+              <div class="mb-4 flex items-center gap-3">
+                <span class="flex h-9 w-9 items-center justify-center rounded-full bg-brand-primary/15 text-brand-primary ring-1 ring-brand-primary/20">
+                  <!-- Compass / Safari-style glyph -->
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="h-5 w-5">
+                    <circle cx="12" cy="12" r="10" />
+                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
+                  </svg>
+                </span>
+                <h3 class="text-lg font-semibold">Mac (Safari)</h3>
+              </div>
+              <p class="text-sm leading-relaxed text-white/75">
+                Open the URL → <strong>Share</strong> → <strong>Add to Dock</strong>.
+              </p>
+            </article>
+
+            <!-- Windows / Mac (Chrome / Edge) -->
+            <article class="rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm">
+              <div class="mb-4 flex items-center gap-3">
+                <span class="flex h-9 w-9 items-center justify-center rounded-full bg-brand-primary/15 text-brand-primary ring-1 ring-brand-primary/20">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="h-5 w-5">
+                    <rect x="2" y="4" width="20" height="14" rx="2" />
+                    <path d="M8 21h8M12 18v3" />
+                  </svg>
+                </span>
+                <h3 class="text-lg font-semibold">Windows / Mac (Chrome / Edge)</h3>
+              </div>
+              <p class="text-sm leading-relaxed text-white/75">
+                Open the URL → an <strong>install icon</strong> appears in the address bar (looks like a monitor with a down-arrow). Click it → confirm. The app opens in its own window and lives in your Start Menu / Applications.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Closing CTA -->
+      <section class="relative border-t border-white/5">
+        <!-- Lighter overlay so the nebula is more visible here, mirroring the hero. -->
+        <div
+          class="pointer-events-none absolute inset-0"
+          style="background: radial-gradient(ellipse at center, rgba(0,5,10,0.05) 0%, rgba(0,5,10,0.30) 70%, rgba(0,5,10,0.55) 100%);"
+          aria-hidden="true"
+        ></div>
+        <div class="relative mx-auto max-w-3xl px-6 py-24 text-center sm:py-28">
+          <h2 class="text-balance text-3xl font-semibold tracking-tight sm:text-5xl">
+            Ready to start your <span class="text-brand-primary">growth journey</span>?
+          </h2>
+          <p class="mx-auto mt-5 max-w-xl text-lg text-white/75">
+            Two taps and InnerVerse lives on your home screen.
+          </p>
+          <div class="mt-10 flex items-center justify-center">
+            <a
+              href="#install"
+              class="rounded-full bg-brand-primary px-8 py-3.5 text-base font-semibold text-brand-primary-contrast shadow-lg shadow-brand-primary/30 transition hover:opacity-90"
+            >
+              Download the app
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="relative border-t border-white/10">
+      <div class="pointer-events-none absolute inset-0 bg-brand-dark/85" aria-hidden="true"></div>
+      <div class="relative mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-8 sm:flex-row">
+        <p class="text-sm text-white/50">© {year} InnerVerse</p>
+        <nav class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-white/60">
+          <a href="#install" class="hover:text-white">Install</a>
+          <a href="/privacy" class="hover:text-white">Privacy</a>
+          <a href="/terms" class="hover:text-white">Terms</a>
+          <a href="mailto:hello@innerverseapp.com" class="hover:text-white">Contact</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>
