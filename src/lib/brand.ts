@@ -15,4 +15,4 @@ export const BRAND = {
   alert: "#DCA114",
 } as const;
 
-export const APP_URL = "https://app.innerverseapp.com";
+export const APP_URL = "https://app.innerverseapp.com/";
