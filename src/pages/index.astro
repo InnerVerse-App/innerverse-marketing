@@ -104,7 +104,7 @@ const features = [
           rel="noopener"
           class="rounded-full bg-brand-primary px-6 py-2.5 text-sm font-semibold text-brand-primary-contrast shadow-lg shadow-brand-primary/20 transition hover:opacity-90 sm:px-7 sm:py-3 sm:text-base"
         >
-          Download the app
+          Open the app
         </a>
       </div>
     </header>
@@ -139,9 +139,10 @@ const features = [
               href={APP_URL}
               target="_blank"
               rel="noopener"
+              data-install-cta
               class="rounded-full bg-brand-primary px-8 py-3.5 text-base font-semibold text-brand-primary-contrast shadow-lg shadow-brand-primary/30 transition hover:opacity-90"
             >
-              Download the app
+              <span data-install-cta-label>Install InnerVerse</span>
             </a>
           </div>
         </div>
@@ -315,7 +316,7 @@ const features = [
       </section>
 
       <!-- Install instructions -->
-      <section id="install" class="relative border-t border-white/5">
+      <section id="install" data-install-section class="relative border-t border-white/5">
         <div class="pointer-events-none absolute inset-0 bg-brand-dark/30" aria-hidden="true"></div>
         <div class="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
           <div class="mb-12 text-center">
@@ -333,7 +334,7 @@ const features = [
           </p>
           <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
             <!-- iPhone (Safari) -->
-            <article class="rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm">
+            <article id="install-card-ios" class="rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm transition">
               <div class="mb-4 flex items-center gap-3">
                 <span class="flex h-9 w-9 items-center justify-center rounded-full bg-brand-primary/15 text-brand-primary ring-1 ring-brand-primary/20">
                   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="h-5 w-5">
@@ -418,14 +419,162 @@ const features = [
               href={APP_URL}
               target="_blank"
               rel="noopener"
+              data-install-cta
               class="rounded-full bg-brand-primary px-8 py-3.5 text-base font-semibold text-brand-primary-contrast shadow-lg shadow-brand-primary/30 transition hover:opacity-90"
             >
-              Download the app
+              <span data-install-cta-label>Install InnerVerse</span>
             </a>
           </div>
         </div>
       </section>
     </main>
+
+    <!-- Smart PWA install handling. Progressively enhances the
+         data-install-cta buttons (hero + closing CTAs):
+         - Android Chrome / desktop Chrome / Edge: captures the
+           browser's beforeinstallprompt event, then a button click
+           shows the native install dialog.
+         - iOS Safari: no install API exists, so a click scrolls to
+           the install instructions section and briefly highlights
+           the iPhone card so the user sees the Share + Add to
+           Home Screen path.
+         - Already-installed (display-mode: standalone, or iOS
+           navigator.standalone): button text becomes "Open the app"
+           and the install instructions section hides itself, since
+           the user has already done the install gesture.
+         - Other browsers (Firefox, etc.): button degrades to its
+           default href — opens app.innerverseapp.com in a new tab,
+           same as before. JS-disabled users get the same fallback.
+         All hooks are progressive — failure of any branch leaves
+         the bare <a href> link intact. -->
+    <script is:inline>
+      (function () {
+        var deferredPrompt = null;
+        var isStandalone =
+          window.matchMedia &&
+          window.matchMedia("(display-mode: standalone)").matches;
+        // iOS Safari exposes its own standalone flag.
+        if (
+          !isStandalone &&
+          typeof window.navigator !== "undefined" &&
+          window.navigator.standalone === true
+        ) {
+          isStandalone = true;
+        }
+
+        var ua = window.navigator.userAgent || "";
+        var isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+        // iPad on iOS 13+ reports as Mac; detect via touch + platform.
+        if (
+          !isIOS &&
+          /Macintosh/.test(ua) &&
+          typeof navigator.maxTouchPoints === "number" &&
+          navigator.maxTouchPoints > 1
+        ) {
+          isIOS = true;
+        }
+
+        function ctaButtons() {
+          return Array.prototype.slice.call(
+            document.querySelectorAll("[data-install-cta]"),
+          );
+        }
+        function setLabel(text) {
+          ctaButtons().forEach(function (btn) {
+            var label = btn.querySelector("[data-install-cta-label]");
+            if (label) label.textContent = text;
+          });
+        }
+
+        // If already installed, hide the install instructions section
+        // and rebrand the CTAs to "Open the app". Buttons still link
+        // to the app URL via href.
+        if (isStandalone) {
+          setLabel("Open the app");
+          var section = document.querySelector("[data-install-section]");
+          if (section) section.style.display = "none";
+          return;
+        }
+
+        // Capture the install prompt when the browser offers it. This
+        // event fires on Android Chrome and desktop Chromium; never on
+        // iOS Safari, never on Firefox.
+        window.addEventListener("beforeinstallprompt", function (e) {
+          e.preventDefault();
+          deferredPrompt = e;
+        });
+
+        // After a successful install, swap CTAs and remove the now-
+        // obsolete instructions section without a page reload.
+        window.addEventListener("appinstalled", function () {
+          deferredPrompt = null;
+          setLabel("Open the app");
+          var section = document.querySelector("[data-install-section]");
+          if (section) section.style.display = "none";
+        });
+
+        // Briefly outline the iPhone install card so iOS users see
+        // exactly which step list applies to them after they tap.
+        function flashIosCard() {
+          var card = document.getElementById("install-card-ios");
+          if (!card) return;
+          var prevShadow = card.style.boxShadow;
+          var prevBorder = card.style.borderColor;
+          card.style.boxShadow = "0 0 0 2px rgba(89,164,192,0.65)";
+          card.style.borderColor = "rgba(89,164,192,0.55)";
+          window.setTimeout(function () {
+            card.style.boxShadow = prevShadow;
+            card.style.borderColor = prevBorder;
+          }, 2400);
+        }
+
+        ctaButtons().forEach(function (btn) {
+          btn.addEventListener("click", function (ev) {
+            // Android / desktop Chromium: native install flow.
+            if (deferredPrompt) {
+              ev.preventDefault();
+              try {
+                deferredPrompt.prompt();
+                var choice = deferredPrompt.userChoice;
+                if (choice && typeof choice.then === "function") {
+                  choice.then(function (result) {
+                    if (
+                      result &&
+                      result.outcome &&
+                      result.outcome === "dismissed"
+                    ) {
+                      // User declined — keep the prompt around so a
+                      // second click works again.
+                    } else {
+                      deferredPrompt = null;
+                    }
+                  });
+                }
+              } catch (_) {
+                deferredPrompt = null;
+              }
+              return;
+            }
+            // iOS Safari: scroll to install steps and flash the iPhone
+            // card so the path is unambiguous.
+            if (isIOS) {
+              ev.preventDefault();
+              var section = document.querySelector(
+                "[data-install-section]",
+              );
+              if (section) {
+                section.scrollIntoView({ behavior: "smooth", block: "start" });
+              }
+              flashIosCard();
+              return;
+            }
+            // Anything else (Firefox, older browsers, no captured
+            // event yet on Chromium): fall through to the bare <a>
+            // href — opens the app URL in a new tab. Same as before.
+          });
+        });
+      })();
+    </script>
 
     <footer class="relative border-t border-white/10">
       <div class="pointer-events-none absolute inset-0 bg-brand-dark/85" aria-hidden="true"></div>
