@@ -329,8 +329,16 @@ const features = [
             </p>
           </div>
 
-          <p class="mb-8 text-center text-sm text-white/50">
-            App URL: <a class="text-brand-primary hover:underline" href={APP_URL} target="_blank" rel="noopener">app.innerverseapp.com</a>
+          <p class="mb-10 text-center text-base text-white/80 sm:text-lg">
+            App URL:
+            <a
+              class="ml-1 inline-block break-all rounded-full bg-white/[0.06] px-3 py-1 font-semibold text-brand-primary ring-1 ring-brand-primary/30 transition hover:bg-white/[0.08] hover:ring-brand-primary/50 sm:px-4 sm:py-1.5"
+              href={APP_URL}
+              target="_blank"
+              rel="noopener"
+            >
+              app.innerverseapp.com
+            </a>
           </p>
           <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
             <!-- iPhone (Safari) -->
@@ -343,9 +351,12 @@ const features = [
                 </span>
                 <h3 class="text-lg font-semibold">iPhone (Safari)</h3>
               </div>
-              <p class="text-sm leading-relaxed text-white/75">
-                Open the app URL → tap the <strong>Share</strong> icon → <strong>Add to Home Screen</strong> → confirm. Launches as a chromeless standalone app from your home screen.
-              </p>
+              <ol class="list-decimal space-y-2 pl-5 text-sm leading-relaxed text-white/80">
+                <li>Open the app URL in <strong>Safari</strong> on your iPhone (it must be Safari — Chrome on iOS can't install PWAs).</li>
+                <li>Tap the <strong>Share</strong> icon — the square with an upward arrow at the bottom-center of the screen.</li>
+                <li>Scroll down in the share sheet and tap <strong>Add to Home Screen</strong>.</li>
+                <li>Tap <strong>Add</strong> in the top-right to confirm. InnerVerse now lives on your home screen and launches full-screen, like a native app.</li>
+              </ol>
             </article>
 
             <!-- Android (Chrome) -->
@@ -358,9 +369,12 @@ const features = [
                 </span>
                 <h3 class="text-lg font-semibold">Android (Chrome)</h3>
               </div>
-              <p class="text-sm leading-relaxed text-white/75">
-                Open the app URL → Chrome shows an <strong>Install app</strong> prompt or chip. If it doesn't, tap the <strong>⋮</strong> menu → <strong>Install app</strong>.
-              </p>
+              <ol class="list-decimal space-y-2 pl-5 text-sm leading-relaxed text-white/80">
+                <li>Open the app URL in <strong>Chrome</strong>.</li>
+                <li>Chrome usually shows an <strong>Install app</strong> banner at the bottom of the screen — tap it.</li>
+                <li>If you don't see the banner, tap the <strong>⋮ menu</strong> (three dots, top-right of Chrome) → <strong>Install app</strong> (sometimes labeled <em>Add to Home screen</em>).</li>
+                <li>Tap <strong>Install</strong> in the dialog to confirm. The app appears on your home screen and in your app drawer.</li>
+              </ol>
             </article>
 
             <!-- Mac (Safari) -->
@@ -375,9 +389,12 @@ const features = [
                 </span>
                 <h3 class="text-lg font-semibold">Mac (Safari)</h3>
               </div>
-              <p class="text-sm leading-relaxed text-white/75">
-                Open the URL → <strong>Share</strong> → <strong>Add to Dock</strong>.
-              </p>
+              <ol class="list-decimal space-y-2 pl-5 text-sm leading-relaxed text-white/80">
+                <li>Open the app URL in <strong>Safari</strong> (macOS Sonoma 14 or later required for installable web apps).</li>
+                <li>Click the <strong>Share</strong> button in Safari's toolbar — the square with an upward arrow, just to the right of the address bar.</li>
+                <li>Choose <strong>Add to Dock</strong> from the menu.</li>
+                <li>Click <strong>Add</strong> to confirm. InnerVerse lives in your Dock and Applications folder and opens in its own window.</li>
+              </ol>
             </article>
 
             <!-- Windows / Mac (Chrome / Edge) -->
@@ -391,9 +408,12 @@ const features = [
                 </span>
                 <h3 class="text-lg font-semibold">Windows / Mac (Chrome / Edge)</h3>
               </div>
-              <p class="text-sm leading-relaxed text-white/75">
-                Open the URL → an <strong>install icon</strong> appears in the address bar (looks like a monitor with a down-arrow). Click it → confirm. The app opens in its own window and lives in your Start Menu / Applications.
-              </p>
+              <ol class="list-decimal space-y-2 pl-5 text-sm leading-relaxed text-white/80">
+                <li>Open the app URL in <strong>Chrome</strong> or <strong>Edge</strong>.</li>
+                <li>Look for the <strong>install icon</strong> in the address bar — a small monitor with a down-arrow, on the right side of the URL.</li>
+                <li>If you don't see the icon, click the <strong>⋮ menu</strong> (three dots, top-right) → <strong>Install InnerVerse</strong> (Chrome) or <strong>Apps → Install this site as an app</strong> (Edge).</li>
+                <li>Click <strong>Install</strong> in the dialog. The app opens in its own window and lives in your Start Menu (Windows) or Applications folder (Mac).</li>
+              </ol>
             </article>
           </div>
         </div>
